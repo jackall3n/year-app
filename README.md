@@ -1,1 +1,1 @@
-[https://year-app.vercel.app](Hosted)
+[hosted](https://year-app.vercel.app)
