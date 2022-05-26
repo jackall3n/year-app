@@ -3,9 +3,12 @@ import NavLink from "../components/NavLink";
 import { useRouter } from "next/router";
 import EventsProvider from "../providers/EventsProvider";
 import ContactsProvider from "../providers/ContactsProvider";
+import Modal from "../components/Modal";
+import { pathToRegexp } from "path-to-regexp";
+import { PropsWithChildren } from "react";
 
 function MyApp({ Component, pageProps }) {
-  const { query } = useRouter();
+  const { query, push } = useRouter();
 
   const modal = query?.modal as string;
 
@@ -32,9 +35,11 @@ function MyApp({ Component, pageProps }) {
           </div>
         </header>
 
-        {modal?.startsWith("/event/") && (
-          <div className="absolute inset-0 z-50 bg-white">Event</div>
-        )}
+        <ModalRoute path="/event/:id">
+          <Modal onClose={() => push({ query: {} })}>
+            <div className="absolute inset-0 z-50 bg-white">Event</div>
+          </Modal>
+        </ModalRoute>
 
         <div className="bg-gray-100 min-h-[100vh]">
           <Component {...pageProps} />
@@ -42,6 +47,20 @@ function MyApp({ Component, pageProps }) {
       </ContactsProvider>
     </EventsProvider>
   );
+}
+
+function ModalRoute({ children, path }: PropsWithChildren<{ path: string }>) {
+  const { query } = useRouter();
+
+  const modal = query?.modal as string;
+
+  const regex = pathToRegexp(path);
+
+  if (regex.test(modal)) {
+    return <>{children}</>;
+  }
+
+  return null;
 }
 
 export default MyApp;
