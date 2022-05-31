@@ -12,7 +12,7 @@ interface Props {
 function AddButton({ onClick, selected, selecting }: Props) {
   const [start, end] = selected.map(parseDate);
 
-  const sameMonth = isSameMonth(start, end);
+  const sameMonth = start  && end ? isSameMonth(start, end) : false;
 
   return (
     <button
