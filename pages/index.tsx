@@ -1,4 +1,4 @@
-import { doc } from "@firebase/firestore";
+import { addDoc, collection, doc } from "@firebase/firestore";
 import { db } from "../db";
 import { useState } from "react";
 import { orderBy } from "lodash";
@@ -24,7 +24,7 @@ export default function Home() {
   const [selecting, setSelecting] = useState(false);
 
   const { events, addEvent } = useEvents();
-  const { contacts } = useContacts();
+  const { contacts, addContact } = useContacts();
 
   const [selected, setSelected] = useState<string[]>([]);
   const [start, end] = orderBy(selected);
@@ -48,18 +48,46 @@ export default function Home() {
   }
 
   async function onSave(values, helpers) {
-    await addEvent({
-      ...values,
-      start: values.start ? new Date(values.start) : null,
-      end: values.end ? new Date(values.end) : null,
-      contact: doc(db, values.contact),
-    });
+    try {
+      let { contact, job } = values;
 
-    helpers.resetForm();
+      if (contact === "NEW") {
+        contact = await addContact({
+          name: values.contactName,
+          color: values.color,
+        });
+      }
 
-    setShowAdd(false);
-    setSelecting(false);
-    setSelected([]);
+      const contactReference = doc(db, contact);
+
+      if (job === "NEW") {
+        const reference = await addDoc(collection(contactReference, "jobs"), {
+          name: values.jobName,
+        });
+
+        job = reference.path;
+      }
+
+      const event = {
+        notes: values.notes,
+        start: values.start ? new Date(values.start) : null,
+        end: values.end ? new Date(values.end) : null,
+        contact: doc(db, contact),
+        job: doc(db, job),
+      };
+
+      console.log({ event });
+
+      await addEvent(event);
+
+      helpers.resetForm();
+
+      setShowAdd(false);
+      setSelecting(false);
+      setSelected([]);
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   function onToggleSelecting() {
@@ -80,8 +108,8 @@ export default function Home() {
         events={events.map((event) => ({
           ...event,
           color:
-            contacts.find((c) => c.reference.path === event.contact.path)?.color ??
-            event.color,
+            contacts.find((c) => c.reference.path === event.contact.path)
+              ?.color ?? event.color,
         }))}
         onClick={onClick}
         selected={selected}

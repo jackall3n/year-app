@@ -1,9 +1,12 @@
 import { Form, Formik, FormikHelpers, useFormikContext } from "formik";
-import { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { IContact } from "../types/contact";
 import { useContacts } from "../providers/ContactsProvider";
-import { PlusIcon, XIcon } from "@heroicons/react/outline";
 import { Field } from "./Form";
+
+import colors from "../colors.json";
+import { orderBy } from "lodash";
+import useCollection from "../hooks/useCollection";
 
 interface Props {
   onClose(): void;
@@ -17,17 +20,17 @@ export interface ICreateEvent {
   start: string;
   end: string;
   contact: string;
+  contactName: string;
+  job: string;
+  jobName: string;
   color: string;
-  note: string;
+  notes: string;
 }
 
 function AddModal({ onClose, onSave, start, end, contacts }: Props) {
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">
-      <div
-        className="fixed inset-0 bg-black bg-opacity-40"
-        onClick={onClose}
-      />
+      <div className="fixed inset-0 bg-black bg-opacity-40" onClick={onClose} />
 
       <div className="relative z-40 bg-white mx-auto max-w-md mb-5 mt-5 sm:mt-20 rounded-xl fixed overflow-y-auto">
         <h2 className="mb-6 text-xl font-semibold flex items-center px-8 pt-8">
@@ -40,7 +43,10 @@ function AddModal({ onClose, onSave, start, end, contacts }: Props) {
             end: end ?? "",
             color: "",
             contact: "",
-            note: "",
+            notes: "",
+            contactName: "",
+            job: "",
+            jobName: "",
           }}
           onSubmit={onSave}
         >
@@ -85,65 +91,13 @@ function AddModal({ onClose, onSave, start, end, contacts }: Props) {
 
 function AddEventContact({ values }: { values: ICreateEvent }) {
   const { contacts } = useContacts();
-  const [editMode, setEditMode] = useState(false);
+
   const { setFieldValue } = useFormikContext<ICreateEvent>();
-
-  useEffect(() => {
-    if (!editMode) {
-      setFieldValue("contact", "");
-    } else {
-      setFieldValue("contactName", "");
-      setFieldValue("contactColor", "");
-    }
-  }, [editMode, setFieldValue]);
-
-  if (editMode) {
-    return (
-      <>
-        <Field
-          label={
-            <div className="flex justify-between items-center">
-              <span className="block flex-1">Contact</span>
-              <button
-                type="button"
-                className="w-5 h-5 ml-3 square-box flex items-center justify-center rounded-full bg-blue-500 text-white"
-                onClick={() => setEditMode(false)}
-              >
-                <XIcon className="w-4 h-4" />
-              </button>
-            </div>
-          }
-          name="contactName"
-          placeholder="Type the contacts name"
-          type="text"
-          labelClassName="flex-1 relative"
-          footer={
-            <button
-              type="button"
-              className="w-12 border border-black border-opacity-20 rounded-md ml-3"
-              style={{ background: values.color }}
-            />
-          }
-        />
-      </>
-    );
-  }
 
   return (
     <>
       <Field
-        label={
-          <div className="flex justify-between items-center">
-            <span className="block flex-1">Contact</span>
-            <button
-              type="button"
-              className="w-5 h-5 ml-3 square-box flex items-center justify-center rounded-full bg-blue-500 text-white"
-              onClick={() => setEditMode(true)}
-            >
-              <PlusIcon className="w-4 h-4" />
-            </button>
-          </div>
-        }
+        label="Contact"
         name="contact"
         as="select"
         labelClassName="flex-1 relative"
@@ -154,7 +108,8 @@ function AddEventContact({ values }: { values: ICreateEvent }) {
           />
         }
       >
-        <option value="" />
+        <option value="" hidden />
+        <option value="NEW">-- Add New --</option>
 
         {contacts.map((e) => (
           <option key={e.id} value={e.reference?.path}>
@@ -162,6 +117,56 @@ function AddEventContact({ values }: { values: ICreateEvent }) {
           </option>
         ))}
       </Field>
+
+      {values.contact === "NEW" && (
+        <>
+          <Field label="Contact name" name="contactName" type="text" />
+          <Field label="Contact color" name="color" as="select">
+            <option value="" hidden />
+
+            {orderBy(colors, "name").map((group) => (
+              <React.Fragment key={group.name}>
+                {group.items
+                  .filter((r) => ["400", "600"].includes(r.variant))
+                  .map((item) => (
+                    <option key={item.variant} value={item.value}>
+                      {group.name} ({item.variant})
+                    </option>
+                  ))}
+              </React.Fragment>
+            ))}
+          </Field>
+        </>
+      )}
+
+      {values.contact && <AddEventContactJob values={values} />}
+    </>
+  );
+}
+
+function AddEventContactJob({ values }: { values: ICreateEvent }) {
+  const [jobs] = useCollection<{ name: string }>(
+    `${values.contact}/jobs`
+  );
+
+  return (
+    <>
+      <Field label="Job" name="job" as="select">
+        <option value="" hidden />
+        <option value="NEW">-- Add New --</option>
+
+        {jobs.map((job) => (
+          <option key={job.id} value={job.id}>
+            {job.name}
+          </option>
+        ))}
+      </Field>
+
+      {values.job === "NEW" && (
+        <>
+          <Field label="Job name" name="jobName" type="text" />
+        </>
+      )}
     </>
   );
 }
@@ -170,7 +175,11 @@ function AutoSelectColor({ contacts }: { contacts: IContact[] }) {
   const { values, setFieldValue, touched } = useFormikContext<ICreateEvent>();
 
   useEffect(() => {
-    if (values.contact && !touched.color) {
+    if (values.contact === "NEW") {
+      setFieldValue("color", "");
+    }
+
+    if (values.contact) {
       const contact = contacts.find((e) => e.reference.path === values.contact);
 
       if (!contact) {

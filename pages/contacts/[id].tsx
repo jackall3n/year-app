@@ -1,8 +1,4 @@
-import {
-  GetServerSidePropsContext,
-  GetServerSidePropsResult,
-  InferGetServerSidePropsType,
-} from "next";
+import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
 import { useDocument } from "../../hooks/useDocument";
 import { IContact, IContactJob } from "../../types/contact";
 import useCollection from "../../hooks/useCollection";
@@ -29,10 +25,8 @@ export default function Contact(
         <h2>Jobs</h2>
 
         <div>
-          {jobs.map(job => (
-            <div key={job.id}>
-              {job.name}
-            </div>
+          {jobs.map((job) => (
+            <div key={job.id}>{job.name}</div>
           ))}
         </div>
       </div>
@@ -40,9 +34,7 @@ export default function Contact(
   );
 }
 
-export async function getServerSideProps(
-  context: GetServerSidePropsContext
-): GetServerSidePropsResult<{ id: string }> {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
   const id = context.query.id;
 
   return {

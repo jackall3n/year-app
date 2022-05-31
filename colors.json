@@ -1,0 +1,992 @@
+[
+  {
+    "name": "Slate",
+    "items": [
+      {
+        "variant": "50",
+        "value": "#f8fafc"
+      },
+      {
+        "variant": "100",
+        "value": "#f1f5f9"
+      },
+      {
+        "variant": "200",
+        "value": "#e2e8f0"
+      },
+      {
+        "variant": "300",
+        "value": "#cbd5e1"
+      },
+      {
+        "variant": "400",
+        "value": "#94a3b8"
+      },
+      {
+        "variant": "500",
+        "value": "#64748b"
+      },
+      {
+        "variant": "600",
+        "value": "#475569"
+      },
+      {
+        "variant": "700",
+        "value": "#334155"
+      },
+      {
+        "variant": "800",
+        "value": "#1e293b"
+      },
+      {
+        "variant": "900",
+        "value": "#0f172a"
+      }
+    ]
+  },
+  {
+    "name": "Gray",
+    "items": [
+      {
+        "variant": "50",
+        "value": "#f9fafb"
+      },
+      {
+        "variant": "100",
+        "value": "#f3f4f6"
+      },
+      {
+        "variant": "200",
+        "value": "#e5e7eb"
+      },
+      {
+        "variant": "300",
+        "value": "#d1d5db"
+      },
+      {
+        "variant": "400",
+        "value": "#9ca3af"
+      },
+      {
+        "variant": "500",
+        "value": "#6b7280"
+      },
+      {
+        "variant": "600",
+        "value": "#4b5563"
+      },
+      {
+        "variant": "700",
+        "value": "#374151"
+      },
+      {
+        "variant": "800",
+        "value": "#1f2937"
+      },
+      {
+        "variant": "900",
+        "value": "#111827"
+      }
+    ]
+  },
+  {
+    "name": "Zinc",
+    "items": [
+      {
+        "variant": "50",
+        "value": "#fafafa"
+      },
+      {
+        "variant": "100",
+        "value": "#f4f4f5"
+      },
+      {
+        "variant": "200",
+        "value": "#e4e4e7"
+      },
+      {
+        "variant": "300",
+        "value": "#d4d4d8"
+      },
+      {
+        "variant": "400",
+        "value": "#a1a1aa"
+      },
+      {
+        "variant": "500",
+        "value": "#71717a"
+      },
+      {
+        "variant": "600",
+        "value": "#52525b"
+      },
+      {
+        "variant": "700",
+        "value": "#3f3f46"
+      },
+      {
+        "variant": "800",
+        "value": "#27272a"
+      },
+      {
+        "variant": "900",
+        "value": "#18181b"
+      }
+    ]
+  },
+  {
+    "name": "Neutral",
+    "items": [
+      {
+        "variant": "50",
+        "value": "#fafafa"
+      },
+      {
+        "variant": "100",
+        "value": "#f5f5f5"
+      },
+      {
+        "variant": "200",
+        "value": "#e5e5e5"
+      },
+      {
+        "variant": "300",
+        "value": "#d4d4d4"
+      },
+      {
+        "variant": "400",
+        "value": "#a3a3a3"
+      },
+      {
+        "variant": "500",
+        "value": "#737373"
+      },
+      {
+        "variant": "600",
+        "value": "#525252"
+      },
+      {
+        "variant": "700",
+        "value": "#404040"
+      },
+      {
+        "variant": "800",
+        "value": "#262626"
+      },
+      {
+        "variant": "900",
+        "value": "#171717"
+      }
+    ]
+  },
+  {
+    "name": "Stone",
+    "items": [
+      {
+        "variant": "50",
+        "value": "#fafaf9"
+      },
+      {
+        "variant": "100",
+        "value": "#f5f5f4"
+      },
+      {
+        "variant": "200",
+        "value": "#e7e5e4"
+      },
+      {
+        "variant": "300",
+        "value": "#d6d3d1"
+      },
+      {
+        "variant": "400",
+        "value": "#a8a29e"
+      },
+      {
+        "variant": "500",
+        "value": "#78716c"
+      },
+      {
+        "variant": "600",
+        "value": "#57534e"
+      },
+      {
+        "variant": "700",
+        "value": "#44403c"
+      },
+      {
+        "variant": "800",
+        "value": "#292524"
+      },
+      {
+        "variant": "900",
+        "value": "#1c1917"
+      }
+    ]
+  },
+  {
+    "name": "Red",
+    "items": [
+      {
+        "variant": "50",
+        "value": "#fef2f2"
+      },
+      {
+        "variant": "100",
+        "value": "#fee2e2"
+      },
+      {
+        "variant": "200",
+        "value": "#fecaca"
+      },
+      {
+        "variant": "300",
+        "value": "#fca5a5"
+      },
+      {
+        "variant": "400",
+        "value": "#f87171"
+      },
+      {
+        "variant": "500",
+        "value": "#ef4444"
+      },
+      {
+        "variant": "600",
+        "value": "#dc2626"
+      },
+      {
+        "variant": "700",
+        "value": "#b91c1c"
+      },
+      {
+        "variant": "800",
+        "value": "#991b1b"
+      },
+      {
+        "variant": "900",
+        "value": "#7f1d1d"
+      }
+    ]
+  },
+  {
+    "name": "Orange",
+    "items": [
+      {
+        "variant": "50",
+        "value": "#fff7ed"
+      },
+      {
+        "variant": "100",
+        "value": "#ffedd5"
+      },
+      {
+        "variant": "200",
+        "value": "#fed7aa"
+      },
+      {
+        "variant": "300",
+        "value": "#fdba74"
+      },
+      {
+        "variant": "400",
+        "value": "#fb923c"
+      },
+      {
+        "variant": "500",
+        "value": "#f97316"
+      },
+      {
+        "variant": "600",
+        "value": "#ea580c"
+      },
+      {
+        "variant": "700",
+        "value": "#c2410c"
+      },
+      {
+        "variant": "800",
+        "value": "#9a3412"
+      },
+      {
+        "variant": "900",
+        "value": "#7c2d12"
+      }
+    ]
+  },
+  {
+    "name": "Amber",
+    "items": [
+      {
+        "variant": "50",
+        "value": "#fffbeb"
+      },
+      {
+        "variant": "100",
+        "value": "#fef3c7"
+      },
+      {
+        "variant": "200",
+        "value": "#fde68a"
+      },
+      {
+        "variant": "300",
+        "value": "#fcd34d"
+      },
+      {
+        "variant": "400",
+        "value": "#fbbf24"
+      },
+      {
+        "variant": "500",
+        "value": "#f59e0b"
+      },
+      {
+        "variant": "600",
+        "value": "#d97706"
+      },
+      {
+        "variant": "700",
+        "value": "#b45309"
+      },
+      {
+        "variant": "800",
+        "value": "#92400e"
+      },
+      {
+        "variant": "900",
+        "value": "#78350f"
+      }
+    ]
+  },
+  {
+    "name": "Yellow",
+    "items": [
+      {
+        "variant": "50",
+        "value": "#fefce8"
+      },
+      {
+        "variant": "100",
+        "value": "#fef9c3"
+      },
+      {
+        "variant": "200",
+        "value": "#fef08a"
+      },
+      {
+        "variant": "300",
+        "value": "#fde047"
+      },
+      {
+        "variant": "400",
+        "value": "#facc15"
+      },
+      {
+        "variant": "500",
+        "value": "#eab308"
+      },
+      {
+        "variant": "600",
+        "value": "#ca8a04"
+      },
+      {
+        "variant": "700",
+        "value": "#a16207"
+      },
+      {
+        "variant": "800",
+        "value": "#854d0e"
+      },
+      {
+        "variant": "900",
+        "value": "#713f12"
+      }
+    ]
+  },
+  {
+    "name": "Lime",
+    "items": [
+      {
+        "variant": "50",
+        "value": "#f7fee7"
+      },
+      {
+        "variant": "100",
+        "value": "#ecfccb"
+      },
+      {
+        "variant": "200",
+        "value": "#d9f99d"
+      },
+      {
+        "variant": "300",
+        "value": "#bef264"
+      },
+      {
+        "variant": "400",
+        "value": "#a3e635"
+      },
+      {
+        "variant": "500",
+        "value": "#84cc16"
+      },
+      {
+        "variant": "600",
+        "value": "#65a30d"
+      },
+      {
+        "variant": "700",
+        "value": "#4d7c0f"
+      },
+      {
+        "variant": "800",
+        "value": "#3f6212"
+      },
+      {
+        "variant": "900",
+        "value": "#365314"
+      }
+    ]
+  },
+  {
+    "name": "Green",
+    "items": [
+      {
+        "variant": "50",
+        "value": "#f0fdf4"
+      },
+      {
+        "variant": "100",
+        "value": "#dcfce7"
+      },
+      {
+        "variant": "200",
+        "value": "#bbf7d0"
+      },
+      {
+        "variant": "300",
+        "value": "#86efac"
+      },
+      {
+        "variant": "400",
+        "value": "#4ade80"
+      },
+      {
+        "variant": "500",
+        "value": "#22c55e"
+      },
+      {
+        "variant": "600",
+        "value": "#16a34a"
+      },
+      {
+        "variant": "700",
+        "value": "#15803d"
+      },
+      {
+        "variant": "800",
+        "value": "#166534"
+      },
+      {
+        "variant": "900",
+        "value": "#14532d"
+      }
+    ]
+  },
+  {
+    "name": "Emerald",
+    "items": [
+      {
+        "variant": "50",
+        "value": "#ecfdf5"
+      },
+      {
+        "variant": "100",
+        "value": "#d1fae5"
+      },
+      {
+        "variant": "200",
+        "value": "#a7f3d0"
+      },
+      {
+        "variant": "300",
+        "value": "#6ee7b7"
+      },
+      {
+        "variant": "400",
+        "value": "#34d399"
+      },
+      {
+        "variant": "500",
+        "value": "#10b981"
+      },
+      {
+        "variant": "600",
+        "value": "#059669"
+      },
+      {
+        "variant": "700",
+        "value": "#047857"
+      },
+      {
+        "variant": "800",
+        "value": "#065f46"
+      },
+      {
+        "variant": "900",
+        "value": "#064e3b"
+      }
+    ]
+  },
+  {
+    "name": "Teal",
+    "items": [
+      {
+        "variant": "50",
+        "value": "#f0fdfa"
+      },
+      {
+        "variant": "100",
+        "value": "#ccfbf1"
+      },
+      {
+        "variant": "200",
+        "value": "#99f6e4"
+      },
+      {
+        "variant": "300",
+        "value": "#5eead4"
+      },
+      {
+        "variant": "400",
+        "value": "#2dd4bf"
+      },
+      {
+        "variant": "500",
+        "value": "#14b8a6"
+      },
+      {
+        "variant": "600",
+        "value": "#0d9488"
+      },
+      {
+        "variant": "700",
+        "value": "#0f766e"
+      },
+      {
+        "variant": "800",
+        "value": "#115e59"
+      },
+      {
+        "variant": "900",
+        "value": "#134e4a"
+      }
+    ]
+  },
+  {
+    "name": "Cyan",
+    "items": [
+      {
+        "variant": "50",
+        "value": "#ecfeff"
+      },
+      {
+        "variant": "100",
+        "value": "#cffafe"
+      },
+      {
+        "variant": "200",
+        "value": "#a5f3fc"
+      },
+      {
+        "variant": "300",
+        "value": "#67e8f9"
+      },
+      {
+        "variant": "400",
+        "value": "#22d3ee"
+      },
+      {
+        "variant": "500",
+        "value": "#06b6d4"
+      },
+      {
+        "variant": "600",
+        "value": "#0891b2"
+      },
+      {
+        "variant": "700",
+        "value": "#0e7490"
+      },
+      {
+        "variant": "800",
+        "value": "#155e75"
+      },
+      {
+        "variant": "900",
+        "value": "#164e63"
+      }
+    ]
+  },
+  {
+    "name": "Sky",
+    "items": [
+      {
+        "variant": "50",
+        "value": "#f0f9ff"
+      },
+      {
+        "variant": "100",
+        "value": "#e0f2fe"
+      },
+      {
+        "variant": "200",
+        "value": "#bae6fd"
+      },
+      {
+        "variant": "300",
+        "value": "#7dd3fc"
+      },
+      {
+        "variant": "400",
+        "value": "#38bdf8"
+      },
+      {
+        "variant": "500",
+        "value": "#0ea5e9"
+      },
+      {
+        "variant": "600",
+        "value": "#0284c7"
+      },
+      {
+        "variant": "700",
+        "value": "#0369a1"
+      },
+      {
+        "variant": "800",
+        "value": "#075985"
+      },
+      {
+        "variant": "900",
+        "value": "#0c4a6e"
+      }
+    ]
+  },
+  {
+    "name": "Blue",
+    "items": [
+      {
+        "variant": "50",
+        "value": "#eff6ff"
+      },
+      {
+        "variant": "100",
+        "value": "#dbeafe"
+      },
+      {
+        "variant": "200",
+        "value": "#bfdbfe"
+      },
+      {
+        "variant": "300",
+        "value": "#93c5fd"
+      },
+      {
+        "variant": "400",
+        "value": "#60a5fa"
+      },
+      {
+        "variant": "500",
+        "value": "#3b82f6"
+      },
+      {
+        "variant": "600",
+        "value": "#2563eb"
+      },
+      {
+        "variant": "700",
+        "value": "#1d4ed8"
+      },
+      {
+        "variant": "800",
+        "value": "#1e40af"
+      },
+      {
+        "variant": "900",
+        "value": "#1e3a8a"
+      }
+    ]
+  },
+  {
+    "name": "Indigo",
+    "items": [
+      {
+        "variant": "50",
+        "value": "#eef2ff"
+      },
+      {
+        "variant": "100",
+        "value": "#e0e7ff"
+      },
+      {
+        "variant": "200",
+        "value": "#c7d2fe"
+      },
+      {
+        "variant": "300",
+        "value": "#a5b4fc"
+      },
+      {
+        "variant": "400",
+        "value": "#818cf8"
+      },
+      {
+        "variant": "500",
+        "value": "#6366f1"
+      },
+      {
+        "variant": "600",
+        "value": "#4f46e5"
+      },
+      {
+        "variant": "700",
+        "value": "#4338ca"
+      },
+      {
+        "variant": "800",
+        "value": "#3730a3"
+      },
+      {
+        "variant": "900",
+        "value": "#312e81"
+      }
+    ]
+  },
+  {
+    "name": "Violet",
+    "items": [
+      {
+        "variant": "50",
+        "value": "#f5f3ff"
+      },
+      {
+        "variant": "100",
+        "value": "#ede9fe"
+      },
+      {
+        "variant": "200",
+        "value": "#ddd6fe"
+      },
+      {
+        "variant": "300",
+        "value": "#c4b5fd"
+      },
+      {
+        "variant": "400",
+        "value": "#a78bfa"
+      },
+      {
+        "variant": "500",
+        "value": "#8b5cf6"
+      },
+      {
+        "variant": "600",
+        "value": "#7c3aed"
+      },
+      {
+        "variant": "700",
+        "value": "#6d28d9"
+      },
+      {
+        "variant": "800",
+        "value": "#5b21b6"
+      },
+      {
+        "variant": "900",
+        "value": "#4c1d95"
+      }
+    ]
+  },
+  {
+    "name": "Purple",
+    "items": [
+      {
+        "variant": "50",
+        "value": "#faf5ff"
+      },
+      {
+        "variant": "100",
+        "value": "#f3e8ff"
+      },
+      {
+        "variant": "200",
+        "value": "#e9d5ff"
+      },
+      {
+        "variant": "300",
+        "value": "#d8b4fe"
+      },
+      {
+        "variant": "400",
+        "value": "#c084fc"
+      },
+      {
+        "variant": "500",
+        "value": "#a855f7"
+      },
+      {
+        "variant": "600",
+        "value": "#9333ea"
+      },
+      {
+        "variant": "700",
+        "value": "#7e22ce"
+      },
+      {
+        "variant": "800",
+        "value": "#6b21a8"
+      },
+      {
+        "variant": "900",
+        "value": "#581c87"
+      }
+    ]
+  },
+  {
+    "name": "Fuchsia",
+    "items": [
+      {
+        "variant": "50",
+        "value": "#fdf4ff"
+      },
+      {
+        "variant": "100",
+        "value": "#fae8ff"
+      },
+      {
+        "variant": "200",
+        "value": "#f5d0fe"
+      },
+      {
+        "variant": "300",
+        "value": "#f0abfc"
+      },
+      {
+        "variant": "400",
+        "value": "#e879f9"
+      },
+      {
+        "variant": "500",
+        "value": "#d946ef"
+      },
+      {
+        "variant": "600",
+        "value": "#c026d3"
+      },
+      {
+        "variant": "700",
+        "value": "#a21caf"
+      },
+      {
+        "variant": "800",
+        "value": "#86198f"
+      },
+      {
+        "variant": "900",
+        "value": "#701a75"
+      }
+    ]
+  },
+  {
+    "name": "Pink",
+    "items": [
+      {
+        "variant": "50",
+        "value": "#fdf2f8"
+      },
+      {
+        "variant": "100",
+        "value": "#fce7f3"
+      },
+      {
+        "variant": "200",
+        "value": "#fbcfe8"
+      },
+      {
+        "variant": "300",
+        "value": "#f9a8d4"
+      },
+      {
+        "variant": "400",
+        "value": "#f472b6"
+      },
+      {
+        "variant": "500",
+        "value": "#ec4899"
+      },
+      {
+        "variant": "600",
+        "value": "#db2777"
+      },
+      {
+        "variant": "700",
+        "value": "#be185d"
+      },
+      {
+        "variant": "800",
+        "value": "#9d174d"
+      },
+      {
+        "variant": "900",
+        "value": "#831843"
+      }
+    ]
+  },
+  {
+    "name": "Rose",
+    "items": [
+      {
+        "variant": "50",
+        "value": "#fff1f2"
+      },
+      {
+        "variant": "100",
+        "value": "#ffe4e6"
+      },
+      {
+        "variant": "200",
+        "value": "#fecdd3"
+      },
+      {
+        "variant": "300",
+        "value": "#fda4af"
+      },
+      {
+        "variant": "400",
+        "value": "#fb7185"
+      },
+      {
+        "variant": "500",
+        "value": "#f43f5e"
+      },
+      {
+        "variant": "600",
+        "value": "#e11d48"
+      },
+      {
+        "variant": "700",
+        "value": "#be123c"
+      },
+      {
+        "variant": "800",
+        "value": "#9f1239"
+      },
+      {
+        "variant": "900",
+        "value": "#881337"
+      }
+    ]
+  }
+]
