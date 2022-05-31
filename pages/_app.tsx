@@ -7,8 +7,10 @@ import { match } from "path-to-regexp";
 import { PropsWithChildren } from "react";
 import Modal from "../components/Modal";
 import { format } from "date-fns";
+import { AppProps } from "next/app";
+import { CalendarIcon, UserIcon } from "@heroicons/react/outline";
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }: AppProps) {
   const { query, push } = useRouter();
 
   const modal = query?.modal as string;
@@ -17,22 +19,26 @@ function MyApp({ Component, pageProps }) {
     <EventsProvider>
       <ContactsProvider>
         <header className="sticky z-30 top-0 bg-white flex border-b">
-          <div className="mx-auto max-w-[600px] flex-1 grid grid-cols-2 mx-auto h-16">
-            <NavLink
-              href="/"
-              exact
-              className="text-2xl px-10 flex items-center"
-              activeClassName="border-b-2 border-purple-400"
-            >
-              Calendar
-            </NavLink>
-            <NavLink
-              href="/contacts"
-              className="text-2xl px-10 flex items-center justify-end"
-              activeClassName="border-b-2 border-purple-400"
-            >
-              Contacts
-            </NavLink>
+          <div className="mx-auto max-w-[600px] flex-1 px-2 flex items-center h-16">
+            <div className="flex-1 text-base font-bold px-5">Yearly</div>
+
+            <div className="grid grid-cols-2">
+              <NavLink
+                href="/"
+                exact
+                className="flex items-center w-16 h-16 justify-center"
+                activeClassName="border-b-2 border-purple-400 bg-gray-50"
+              >
+                <CalendarIcon className="w-5 h-5" />
+              </NavLink>
+              <NavLink
+                href="/contacts"
+                className="flex items-center w-16 h-16 justify-center"
+                activeClassName="border-b-2 border-purple-400 bg-gray-50"
+              >
+                <UserIcon className="w-5 h-5" />
+              </NavLink>
+            </div>
           </div>
         </header>
 

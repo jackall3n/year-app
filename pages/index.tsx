@@ -76,7 +76,16 @@ export default function Home() {
   return (
     <div className="mx-auto flex flex-col px-7 pt-10 pb-80 bg-gray-100">
       <DesktopCalendar events={events} onClick={onClick} selected={selected} />
-      <MobileCalendar events={events} onClick={onClick} selected={selected} />
+      <MobileCalendar
+        events={events.map((event) => ({
+          ...event,
+          color:
+            contacts.find((c) => c.reference.path === event.contact.path)?.color ??
+            event.color,
+        }))}
+        onClick={onClick}
+        selected={selected}
+      />
 
       {showAdd && (
         <AddModal
