@@ -1,11 +1,12 @@
 import "../styles/globals.css";
 import NavLink from "../components/NavLink";
 import { useRouter } from "next/router";
-import EventsProvider from "../providers/EventsProvider";
-import ContactsProvider from "../providers/ContactsProvider";
-import Modal from "../components/Modal";
-import { pathToRegexp } from "path-to-regexp";
+import EventsProvider, { useEvents } from "../providers/EventsProvider";
+import ContactsProvider, { useContacts } from "../providers/ContactsProvider";
+import { match } from "path-to-regexp";
 import { PropsWithChildren } from "react";
+import Modal from "../components/Modal";
+import { format } from "date-fns";
 
 function MyApp({ Component, pageProps }) {
   const { query, push } = useRouter();
@@ -26,20 +27,16 @@ function MyApp({ Component, pageProps }) {
               Calendar
             </NavLink>
             <NavLink
-              href="/jobs"
+              href="/contacts"
               className="text-2xl px-10 flex items-center justify-end"
               activeClassName="border-b-2 border-purple-400"
             >
-              Jobs
+              Contacts
             </NavLink>
           </div>
         </header>
 
-        <ModalRoute path="/event/:id">
-          <Modal onClose={() => push({ query: {} })}>
-            <div className="absolute inset-0 z-50 bg-white">Event</div>
-          </Modal>
-        </ModalRoute>
+        <ModalRoute path="/event/:id" component={ViewEvent} />
 
         <div className="bg-gray-100 min-h-[100vh]">
           <Component {...pageProps} />
@@ -49,18 +46,69 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-function ModalRoute({ children, path }: PropsWithChildren<{ path: string }>) {
+function ModalRoute({
+  children,
+  path,
+  component: Component,
+}: PropsWithChildren<{ path: string; component: any }>) {
   const { query } = useRouter();
 
   const modal = query?.modal as string;
 
-  const regex = pathToRegexp(path);
+  const fn = match(path);
 
-  if (regex.test(modal)) {
+  const result = fn(modal);
+
+  console.log(result);
+
+  if (!result) {
+    return null;
+  }
+
+  if (children) {
     return <>{children}</>;
   }
 
+  if (Component) {
+    return <Component match={result} />;
+  }
+
   return null;
+}
+
+function ViewEvent({
+  children,
+  match,
+}: PropsWithChildren<{ match: { params: { id } } }>) {
+  const { push } = useRouter();
+  const { events } = useEvents();
+  const { contacts } = useContacts();
+
+  const { id } = match.params;
+
+  const event = events.find((e) => e.id === id);
+  const contact = contacts.find(
+    (c) => c.reference.path === event?.contact?.path
+  );
+
+  if (!event) {
+    return null;
+  }
+
+  return (
+    <Modal onClose={() => push({ query: {} })}>
+      <div>
+        <div className="text-2xl">{contact?.name}</div>
+
+        {event.start && (
+          <div>{format(event.start.toDate(), "EEE do MMM yyyy")}</div>
+        )}
+        {event.end && (
+          <div>{format(event.end.toDate(), "EEE do MMM yyyy")}</div>
+        )}
+      </div>
+    </Modal>
+  );
 }
 
 export default MyApp;

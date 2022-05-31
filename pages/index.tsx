@@ -8,7 +8,13 @@ import AddModal from "../components/AddModal";
 import { DesktopCalendar, MobileCalendar } from "../components/Calendars";
 import { useEvents } from "../providers/EventsProvider";
 import { useContacts } from "../providers/ContactsProvider";
-import { format, isSameDay, isWithinInterval } from "date-fns";
+import {
+  endOfDay,
+  format,
+  isSameDay,
+  isWithinInterval,
+  startOfDay,
+} from "date-fns";
 import { parseDate } from "../utils/date";
 import Link from "next/link";
 import { PlusCircleIcon } from "@heroicons/react/solid";
@@ -123,8 +129,8 @@ function Events({ start, end, onSetAdd, selecting }: any) {
     }
 
     return isWithinInterval(parsedStart, {
-      start: event.start.toDate(),
-      end: event.end.toDate(),
+      start: startOfDay(event.start.toDate()),
+      end: endOfDay(event.end.toDate()),
     });
   });
 

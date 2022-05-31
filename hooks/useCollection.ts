@@ -1,27 +1,22 @@
-import { useEffect, useState } from "react";
-import { collection, onSnapshot, query } from "@firebase/firestore";
+import { useEffect, useMemo, useState } from "react";
+import { collection, CollectionReference, Firestore, onSnapshot, query } from "@firebase/firestore";
+import { pullAt } from "lodash";
+
+import { IDocument } from "../types/document";
 import { db } from "../db";
-import { orderBy, pullAt } from "lodash";
-import { CollectionReference, DocumentReference } from "firebase/firestore";
 
-export type IDocument<T> = T & {
-  id: string;
-  reference: DocumentReference<T>;
-};
+export function useCollection<T>(name: string) {
 
-function useCollection<T>(name: string, options = { orderBy: undefined }) {
   const [data, setData] = useState<IDocument<T>[]>([]);
 
-  const col = collection(db, name) as CollectionReference<T>;
+  const reference = useMemo(() => collection(db, name) as CollectionReference<T>, [name])
 
   useEffect(() => {
-    const q = query<T>(col);
+    const q = query<T>(reference);
 
     return onSnapshot(q, (snapshot) => {
       setData((data) => {
         const updated = [...data];
-
-        console.log(name, updated.length);
 
         for (const change of snapshot.docChanges()) {
           const { doc, type } = change;
@@ -34,6 +29,7 @@ function useCollection<T>(name: string, options = { orderBy: undefined }) {
               const item = {
                 id: doc.id,
                 reference: doc.ref,
+                exists: doc.exists(),
                 ...doc.data(),
               };
 
@@ -57,16 +53,12 @@ function useCollection<T>(name: string, options = { orderBy: undefined }) {
           }
         }
 
-        console.log(name, { updated });
-
-        return orderBy(updated, options.orderBy);
+        return updated;
       });
     });
-  }, []);
+  }, [reference]);
 
-  console.log(name, data.length);
-
-  return [data, col] as const;
+  return [data, reference] as const;
 }
 
 export default useCollection;
