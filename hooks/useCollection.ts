@@ -7,6 +7,7 @@ import {
 import { mapValues } from "lodash";
 import { db } from "../db";
 import { useCollectionData } from "react-firebase-hooks/firestore";
+import {IDocument} from "../types/document";
 
 function normalize<T>(data: T) {
   if (!data) {
@@ -54,7 +55,7 @@ export function useCollection<T>(name: string) {
 
   const [data = []] = useCollectionData(reference);
 
-  return [data, reference] as const;
+  return [data, reference] as [IDocument<T>[], CollectionReference<T>];
 }
 
 export default useCollection;
