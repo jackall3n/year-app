@@ -6,13 +6,10 @@ import { addDoc, CollectionReference } from "firebase/firestore";
 export interface IEventsContext {
   events: IEvent[];
 
-  addEvent(event: ICreateEvent): Promise<void>;
+  addEvent(event: ICreateEvent): Promise<string>;
 }
 
-export const EventsContext = createContext<IEventsContext>({
-  events: [],
-  addEvent: () => Promise.resolve(),
-});
+export const EventsContext = createContext<IEventsContext>(undefined as never);
 
 export const useEvents = () => useContext(EventsContext);
 
@@ -20,7 +17,9 @@ function EventsProvider({ children }: PropsWithChildren<unknown>) {
   const [events, collection] = useCollection<IEvent>("events");
 
   async function addEvent(event: IEvent) {
-    await addDoc(collection, event);
+    const reference = await addDoc(collection, event);
+
+    return reference.id;
   }
 
   console.log(events);

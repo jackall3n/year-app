@@ -25,6 +25,9 @@ import { parseDate } from "../utils/date";
 import Link from "next/link";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import { ICreateEvent, IEvent } from "../types/event";
+import { useJobs } from "../providers/JobsProvider";
+import { IContact } from "../types/contact";
+import { IJob } from "../types/job";
 
 export default function Home() {
   const [showAdd, setShowAdd] = useState(false);
@@ -32,6 +35,7 @@ export default function Home() {
 
   const { events, addEvent } = useEvents();
   const { contacts, addContact } = useContacts();
+  const { jobs, addJob } = useJobs();
 
   const [selected, setSelected] = useState<string[]>([]);
   const [start, end] = orderBy(selected);
@@ -56,31 +60,26 @@ export default function Home() {
 
   async function onSave(values, helpers) {
     try {
-      let { contact, job } = values;
+      const user = doc(db, "users", "dan");
 
-      if (contact === "NEW") {
-        contact = await addContact({
-          name: values.contactName,
-          color: values.color,
-        });
-      }
+      let { contact: contactId, job: jobId } = values;
 
-      const contactReference = doc(db, 'users', 'dan', contact);
+      const contact =
+        contactId === "NEW"
+          ? await addContact({ name: values.contactName, color: values.color })
+          : (doc(user, "contacts", contactId) as DocumentReference<IContact>);
 
-      if (job === "NEW") {
-        const reference = await addDoc(collection(contactReference, "jobs"), {
-          name: values.jobName,
-        });
-
-        job = reference.path;
-      }
+      const job =
+        jobId === "NEW"
+          ? await addJob({ contact, name: values.jobName })
+          : (doc(user, "jobs", jobId) as DocumentReference<IJob>);
 
       const event: ICreateEvent = {
         notes: values.notes,
         start: values.start ? new Date(values.start) : null,
         end: values.end ? new Date(values.end) : null,
-        contact: doc(db, contact) as DocumentReference<any>,
-        job: doc(db, job) as DocumentReference<any>,
+        contact,
+        job,
       };
 
       console.log({ event });
@@ -110,7 +109,16 @@ export default function Home() {
 
   return (
     <div className="mx-auto flex flex-col sm:px-7 sm:pt-10 pb-80 bg-gray-100">
-      <DesktopCalendar events={events} onClick={onClick} selected={selected} />
+      <DesktopCalendar
+        events={events.map((event) => ({
+          ...event,
+          color:
+            contacts.find((c) => c.reference.path === event.contact.path)
+              ?.color ?? event.color,
+        }))}
+        onClick={onClick}
+        selected={selected}
+      />
       <MobileCalendar
         events={events.map((event) => ({
           ...event,

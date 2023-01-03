@@ -7,10 +7,13 @@ import { Field } from "./Form";
 import colors from "../colors.json";
 import { orderBy } from "lodash";
 import useCollection from "../hooks/useCollection";
+import { useJobs } from "../providers/JobsProvider";
 
 interface Props {
   onClose(): void;
+
   onSave(values: ICreateEvent, helpers: FormikHelpers<ICreateEvent>): void;
+
   start?: string;
   end?: string;
   contacts: IContact[];
@@ -111,9 +114,9 @@ function AddEventContact({ values }: { values: ICreateEvent }) {
         <option value="" hidden />
         <option value="NEW">-- Add New --</option>
 
-        {contacts.map((e) => (
-          <option key={e.id} value={e.reference?.path}>
-            {e.name}
+        {contacts.map((contact) => (
+          <option key={contact.id} value={contact.id}>
+            {contact.name}
           </option>
         ))}
       </Field>
@@ -145,9 +148,7 @@ function AddEventContact({ values }: { values: ICreateEvent }) {
 }
 
 function AddEventContactJob({ values }: { values: ICreateEvent }) {
-  const [jobs] = useCollection<{ name: string }>(
-    `${values.contact}/jobs`
-  );
+  const { jobs } = useJobs();
 
   return (
     <>

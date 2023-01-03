@@ -10,6 +10,7 @@ import { format } from "date-fns";
 import { AppProps } from "next/app";
 import { CalendarIcon, UserIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import JobsProvider from "../providers/JobsProvider";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { query, push } = useRouter();
@@ -19,40 +20,42 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <EventsProvider>
       <ContactsProvider>
-        <header className="sticky z-30 top-0 bg-white flex border-b">
-          <div className="mx-auto max-w-[600px] flex-1 px-2 flex items-center h-16">
-            <Link
-              href="/"
-              className="block flex-1 text-base font-bold px-5 h-16 flex items-center"
-            >
-              Yearly
-            </Link>
-
-            <div className="grid grid-cols-2">
-              <NavLink
+        <JobsProvider>
+          <header className="sticky z-30 top-0 bg-white flex border-b">
+            <div className="mx-auto max-w-[600px] flex-1 px-2 flex items-center h-16">
+              <Link
                 href="/"
-                exact
-                className="flex items-center w-16 h-16 justify-center"
-                activeClassName="border-b-2 border-purple-400 bg-gray-50"
+                className="block flex-1 text-base font-bold px-5 h-16 flex items-center"
               >
-                <CalendarIcon className="w-5 h-5" />
-              </NavLink>
-              <NavLink
-                href="/contacts"
-                className="flex items-center w-16 h-16 justify-center"
-                activeClassName="border-b-2 border-purple-400 bg-gray-50"
-              >
-                <UserIcon className="w-5 h-5" />
-              </NavLink>
+                Yearly
+              </Link>
+
+              <div className="grid grid-cols-2">
+                <NavLink
+                  href="/"
+                  exact
+                  className="flex items-center w-16 h-16 justify-center"
+                  activeClassName="border-b-2 border-purple-400 bg-gray-50"
+                >
+                  <CalendarIcon className="w-5 h-5" />
+                </NavLink>
+                <NavLink
+                  href="/contacts"
+                  className="flex items-center w-16 h-16 justify-center"
+                  activeClassName="border-b-2 border-purple-400 bg-gray-50"
+                >
+                  <UserIcon className="w-5 h-5" />
+                </NavLink>
+              </div>
             </div>
+          </header>
+
+          <ModalRoute path="/event/:id" component={ViewEvent} />
+
+          <div className="bg-gray-100 min-h-[100vh]">
+            <Component {...pageProps} />
           </div>
-        </header>
-
-        <ModalRoute path="/event/:id" component={ViewEvent} />
-
-        <div className="bg-gray-100 min-h-[100vh]">
-          <Component {...pageProps} />
-        </div>
+        </JobsProvider>
       </ContactsProvider>
     </EventsProvider>
   );
@@ -112,12 +115,8 @@ function ViewEvent({
       <div>
         <div className="text-2xl">{contact?.name}</div>
 
-        {event.start && (
-          <div>{format(event.start, "EEE do MMM yyyy")}</div>
-        )}
-        {event.end && (
-          <div>{format(event.end, "EEE do MMM yyyy")}</div>
-        )}
+        {event.start && <div>{format(event.start, "EEE do MMM yyyy")}</div>}
+        {event.end && <div>{format(event.end, "EEE do MMM yyyy")}</div>}
       </div>
     </Modal>
   );

@@ -32,7 +32,7 @@ export function DesktopCalendar({ events, onClick, selected }: Props) {
         <div className="w-20 h-7 flex items-center justify-center" />
 
         {Array.from(Array(37)).map((_, i) => {
-          const day = addDays(startOfYear(new Date(year, 0, 1)), i + 2);
+          const day = addDays(startOfYear(new Date(year, 0, 1)), i + 1);
 
           return (
             <div
@@ -94,8 +94,8 @@ function getMonth(date: Date, events: IEvent[]) {
   const days = differenceInDays(end, start);
 
   const padding = {
-    start: getDay(start) || 7,
-    end: getDay(end) || 7,
+    start: getDay(start) || 6,
+    end: getDay(end) || 6,
   };
 
   return {
