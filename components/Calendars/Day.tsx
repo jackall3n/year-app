@@ -46,8 +46,6 @@ export function Day({ day, className, selected, onClick }: Props) {
 
   const gradient = createGradient(events);
 
-  console.log(events.length ? events : []);
-
   const classNames = classnames(
     className,
     "aspect-square select-none cursor-pointer hover:bg-gray-200 text-xs flex p-2 rounded-sm relative overflow-hidden",
