@@ -49,14 +49,14 @@ export default function Home() {
                     {Boolean(e.start || e.end) && (
                       <div className="text-xs pt-2">
                         <span>
-                          {e.start && format(e.start?.toDate(), "do MMM")}
+                          {e.start && format(e.start, "do MMM")}
                         </span>
 
                         {e.end && (
                           <span>
                             <span> - </span>
 
-                            <span>{format(e.end?.toDate(), "do MMM")}</span>
+                            <span>{format(e.end, "do MMM")}</span>
                           </span>
                         )}
                       </div>

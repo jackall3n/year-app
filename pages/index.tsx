@@ -1,6 +1,12 @@
-import { addDoc, collection, doc } from "@firebase/firestore";
+import {
+  addDoc,
+  collection,
+  CollectionReference,
+  doc,
+  DocumentReference,
+} from "firebase/firestore";
 import { db } from "../db";
-import { useState } from "react";
+import { useState, MouseEvent } from "react";
 import { orderBy } from "lodash";
 
 import AddButton from "../components/AddButton";
@@ -17,7 +23,8 @@ import {
 } from "date-fns";
 import { parseDate } from "../utils/date";
 import Link from "next/link";
-import { PlusCircleIcon } from "@heroicons/react/solid";
+import { PlusCircleIcon } from "@heroicons/react/24/outline";
+import { ICreateEvent, IEvent } from "../types/event";
 
 export default function Home() {
   const [showAdd, setShowAdd] = useState(false);
@@ -29,14 +36,14 @@ export default function Home() {
   const [selected, setSelected] = useState<string[]>([]);
   const [start, end] = orderBy(selected);
 
-  function onClick(date: string) {
+  function onClick(date: string, event: MouseEvent) {
     if (selected.includes(date)) {
       setSelected(selected.filter((s) => s !== date));
 
       return;
     }
 
-    if (!selecting) {
+    if (!selecting && !event.shiftKey) {
       setSelected([date]);
 
       return;
@@ -58,7 +65,7 @@ export default function Home() {
         });
       }
 
-      const contactReference = doc(db, contact);
+      const contactReference = doc(db, 'users', 'dan', contact);
 
       if (job === "NEW") {
         const reference = await addDoc(collection(contactReference, "jobs"), {
@@ -68,12 +75,12 @@ export default function Home() {
         job = reference.path;
       }
 
-      const event = {
+      const event: ICreateEvent = {
         notes: values.notes,
         start: values.start ? new Date(values.start) : null,
         end: values.end ? new Date(values.end) : null,
-        contact: doc(db, contact),
-        job: doc(db, job),
+        contact: doc(db, contact) as DocumentReference<any>,
+        job: doc(db, job) as DocumentReference<any>,
       };
 
       console.log({ event });
@@ -102,7 +109,7 @@ export default function Home() {
   }
 
   return (
-    <div className="mx-auto flex flex-col px-7 pt-10 pb-80 bg-gray-100">
+    <div className="mx-auto flex flex-col sm:px-7 sm:pt-10 pb-80 bg-gray-100">
       <DesktopCalendar events={events} onClick={onClick} selected={selected} />
       <MobileCalendar
         events={events.map((event) => ({
@@ -162,12 +169,12 @@ function Events({ start, end, onSetAdd, selecting }: any) {
     }
 
     if (!event.end) {
-      return isSameDay(event.start.toDate(), parsedStart);
+      return isSameDay(event.start, parsedStart);
     }
 
     return isWithinInterval(parsedStart, {
-      start: startOfDay(event.start.toDate()),
-      end: endOfDay(event.end.toDate()),
+      start: startOfDay(event.start),
+      end: endOfDay(event.end),
     });
   });
 
@@ -184,54 +191,54 @@ function Events({ start, end, onSetAdd, selecting }: any) {
           );
 
           return (
-            <Link key={e.id} href={{ query: { modal: `/event/${e.id}` } }}>
-              <a className="bg-white rounded-md overflow-hidden flex shadow-md border border-gray-100 hover:bg-gray-200 cursor-pointer transition-all hover:shadow-md">
-                <div
-                  className="w-1 h-full rounded-full"
-                  style={{ backgroundColor: e.color }}
-                />
+            <Link
+              key={e.id}
+              href={{ query: { modal: `/event/${e.id}` } }}
+              className="bg-white rounded-md overflow-hidden flex shadow-md border border-gray-100 hover:bg-gray-200 cursor-pointer transition-all hover:shadow-md"
+            >
+              <div
+                className="w-1 h-full rounded-full"
+                style={{ backgroundColor: e.color }}
+              />
 
-                <div className="flex-1 flex justify-between px-4 py-3">
-                  <div className="flex flex-col">
-                    <div className="font-medium">{contact?.name}</div>
-                    {e.notes && (
-                      <div className="whitespace-nowrap overflow-hidden text-ellipsis text-xs text-gray-400 pt-0.5">
-                        {e.notes}
+              <div className="flex-1 flex justify-between px-4 py-3">
+                <div className="flex flex-col">
+                  <div className="font-medium">{contact?.name}</div>
+                  {e.notes && (
+                    <div className="whitespace-nowrap overflow-hidden text-ellipsis text-xs text-gray-400 pt-0.5">
+                      {e.notes}
+                    </div>
+                  )}
+                </div>
+
+                <div className="flex flex-col items-end pt-0.5">
+                  <div className="flex">
+                    {e.start ? (
+                      <div className="uppercase bg-purple-400 text-purple-900 text-xs font-medium rounded-md px-2 py-0.5">
+                        Booked
+                      </div>
+                    ) : (
+                      <div className="uppercase bg-yellow-400 text-yellow-900 text-xs font-medium rounded-md px-2 py-0.5">
+                        Planned
                       </div>
                     )}
                   </div>
 
-                  <div className="flex flex-col items-end pt-0.5">
-                    <div className="flex">
-                      {e.start ? (
-                        <div className="uppercase bg-purple-400 text-purple-900 text-xs font-medium rounded-md px-2 py-0.5">
-                          Booked
-                        </div>
-                      ) : (
-                        <div className="uppercase bg-yellow-400 text-yellow-900 text-xs font-medium rounded-md px-2 py-0.5">
-                          Planned
-                        </div>
+                  {Boolean(e.start || e.end) && (
+                    <div className="text-xs pt-2">
+                      <span>{e.start && format(e.start, "do MMM")}</span>
+
+                      {e.end && (
+                        <span>
+                          <span> - </span>
+
+                          <span>{format(e.end, "do MMM")}</span>
+                        </span>
                       )}
                     </div>
-
-                    {Boolean(e.start || e.end) && (
-                      <div className="text-xs pt-2">
-                        <span>
-                          {e.start && format(e.start?.toDate(), "do MMM")}
-                        </span>
-
-                        {e.end && (
-                          <span>
-                            <span> - </span>
-
-                            <span>{format(e.end?.toDate(), "do MMM")}</span>
-                          </span>
-                        )}
-                      </div>
-                    )}
-                  </div>
+                  )}
                 </div>
-              </a>
+              </div>
             </Link>
           );
         })}

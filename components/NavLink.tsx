@@ -23,16 +23,15 @@ function NavLink({
   const active = exact ? pathname === href : pathname.startsWith(href);
 
   return (
-    <Link href={href}>
-      <a
-        {...props}
-        className={classNames(className, {
-          active,
-          [activeClassName]: activeClassName && active,
-        })}
-      >
-        {children}
-      </a>
+    <Link
+      href={href}
+      {...props}
+      className={classNames(className, {
+        active,
+        [activeClassName]: activeClassName && active,
+      })}
+    >
+      {children}
     </Link>
   );
 }

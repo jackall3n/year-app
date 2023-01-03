@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, MouseEvent } from "react";
 import classNames from "classnames";
 import { IEvent } from "../../types/event";
 import {
@@ -17,12 +17,12 @@ import { Day } from "./Day";
 
 interface Props {
   events: IEvent[];
-  onClick(date: string): void;
+  onClick(date: string, event: MouseEvent): void;
   selected: string[];
 }
 
 export function DesktopCalendar({ events, onClick, selected }: Props) {
-  const [year, setYear] = useState(2022);
+  const [year, setYear] = useState(2023);
 
   const months = useMemo(() => getMonths(year, events), [year, events]);
 
@@ -112,13 +112,13 @@ function getMonth(date: Date, events: IEvent[]) {
 
         const endDate = end || start;
 
-        if (endDate.toDate() < start.toDate()) {
+        if (endDate < start) {
           return false;
         }
 
         return isWithinInterval(date, {
-          start: startOfDay(start.toDate()),
-          end: endOfDay(endDate.toDate()),
+          start: startOfDay(start),
+          end: endOfDay(endDate),
         });
       });
 

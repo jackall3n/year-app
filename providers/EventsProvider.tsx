@@ -1,13 +1,12 @@
 import { createContext, PropsWithChildren, useContext } from "react";
 import useCollection from "../hooks/useCollection";
-import { IEvent } from "../types/event";
-import { addDoc } from "@firebase/firestore";
-import firebase from "firebase/compat";
-import CollectionReference = firebase.firestore.CollectionReference;
+import { ICreateEvent, IEvent } from "../types/event";
+import { addDoc, CollectionReference } from "firebase/firestore";
 
 export interface IEventsContext {
-  events: Array<IEvent & { ref: CollectionReference<IEvent>; id: string }>;
-  addEvent(event: IEvent): Promise<void>;
+  events: IEvent[];
+
+  addEvent(event: ICreateEvent): Promise<void>;
 }
 
 export const EventsContext = createContext<IEventsContext>({
@@ -23,6 +22,8 @@ function EventsProvider({ children }: PropsWithChildren<unknown>) {
   async function addEvent(event: IEvent) {
     await addDoc(collection, event);
   }
+
+  console.log(events);
 
   return (
     <EventsContext.Provider value={{ events, addEvent }}>

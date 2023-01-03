@@ -4,7 +4,7 @@ import {
   DocumentReference,
   Firestore,
   onSnapshot,
-} from "@firebase/firestore";
+} from "firebase/firestore";
 
 import { IDocument } from "../types/document";
 import { db } from "../db";

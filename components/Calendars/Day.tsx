@@ -1,3 +1,4 @@
+import { MouseEvent } from "react";
 import classnames from "classnames";
 import { format, getDay } from "date-fns";
 import { IEvent } from "../../types/event";
@@ -12,11 +13,12 @@ interface Props {
   day: IDay;
   className?: string;
   selected: string[];
-  onClick(date: string): void;
+
+  onClick(date: string, event: MouseEvent): void;
 }
 
 function createGradient(events: IEvent[]) {
-  const gradients = events.map(({ color }, index) => {
+  const gradients = events.map(({ color = "#000000" }, index) => {
     const start = (index / events.length) * 100;
     const end = ((index + 1) / events.length) * 100;
 
@@ -33,7 +35,7 @@ function createGradient(events: IEvent[]) {
 export function Day({ day, className, selected, onClick }: Props) {
   const { date, events } = day;
 
-  const isWeekend = [5, 6].includes(getDay(date));
+  const isWeekend = [0, 6].includes(getDay(date));
 
   const formatted = format(date, "yyyy-MM-dd");
 
@@ -44,26 +46,34 @@ export function Day({ day, className, selected, onClick }: Props) {
 
   const gradient = createGradient(events);
 
+  console.log(events.length ? events : []);
+
   const classNames = classnames(
     className,
-    "cursor-pointer hover:bg-gray-200 text-xs flex items-center justify-center rounded-sm relative overflow-hidden",
+    "aspect-square select-none cursor-pointer hover:bg-gray-200 text-xs flex p-2 rounded-sm relative overflow-hidden",
     {
-      "bg-gray-200": isWeekend,
+      "bg-gray-50": isWeekend,
       "bg-white": !isWeekend,
       "text-white": events.length,
     }
   );
 
+  const description = format(date, "d");
+  const isFirst = description === "1";
+
   return (
     <div
       key={date.toISOString()}
-      onClick={() => onClick(formatted)}
+      onClick={(e) => onClick(formatted, e)}
       className={classNames}
       style={{
         background: gradient,
       }}
     >
-      <div className="relative">{format(date, "d")}</div>
+      <div className={classnames("relative", { "font-semibold": isFirst })}>
+        <span>{description}</span>
+        {isFirst && <span> {format(date, "MMM")}</span>}
+      </div>
 
       {isSelected && (
         <div

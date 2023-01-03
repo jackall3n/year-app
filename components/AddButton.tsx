@@ -1,4 +1,4 @@
-import { PlusIcon } from "@heroicons/react/outline";
+import { PlusIcon } from "@heroicons/react/24/outline";
 import { format, isSameMonth } from "date-fns";
 import { parseDate } from "../utils/date";
 import classnames from "classnames";

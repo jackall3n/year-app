@@ -8,7 +8,7 @@ import { PropsWithChildren } from "react";
 import Modal from "../components/Modal";
 import { format } from "date-fns";
 import { AppProps } from "next/app";
-import { CalendarIcon, UserIcon } from "@heroicons/react/outline";
+import { CalendarIcon, UserIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -21,8 +21,11 @@ function MyApp({ Component, pageProps }: AppProps) {
       <ContactsProvider>
         <header className="sticky z-30 top-0 bg-white flex border-b">
           <div className="mx-auto max-w-[600px] flex-1 px-2 flex items-center h-16">
-            <Link href="/">
-              <a className="block flex-1 text-base font-bold px-5 h-16 flex items-center">Yearly</a>
+            <Link
+              href="/"
+              className="block flex-1 text-base font-bold px-5 h-16 flex items-center"
+            >
+              Yearly
             </Link>
 
             <div className="grid grid-cols-2">
@@ -110,10 +113,10 @@ function ViewEvent({
         <div className="text-2xl">{contact?.name}</div>
 
         {event.start && (
-          <div>{format(event.start.toDate(), "EEE do MMM yyyy")}</div>
+          <div>{format(event.start, "EEE do MMM yyyy")}</div>
         )}
         {event.end && (
-          <div>{format(event.end.toDate(), "EEE do MMM yyyy")}</div>
+          <div>{format(event.end, "EEE do MMM yyyy")}</div>
         )}
       </div>
     </Modal>
