@@ -1,6 +1,7 @@
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
 import { useDocument } from "../../hooks/useDocument";
-import { IContact, IContactJob } from "../../types/contact";
+import { IContact } from "../../types/contact";
+import { IJob  } from "../../types/job";
 import useCollection from "../../hooks/useCollection";
 
 export default function Contact(
@@ -9,7 +10,7 @@ export default function Contact(
   const { id } = props;
 
   const [contact] = useDocument<IContact>(`contacts/${id}`);
-  const [jobs] = useCollection<IContactJob>(`contacts/${id}/jobs`);
+  const [jobs] = useCollection<IJob>(`jobs`);
 
   if (!contact?.exists) {
     return null;
