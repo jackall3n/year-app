@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { TagIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { useEvents } from "../providers/EventsProvider";
 import { useContacts } from "../providers/ContactsProvider";
@@ -15,25 +15,30 @@ export default function Home() {
             <Link
               key={contact.id}
               href={`/contacts/${contact.id}`}
-              className="bg-white rounded-md overflow-hidden flex shadow-md border hover:bg-gray-200 cursor-pointer transition-all hover:shadow-md"
+              className="bg-white rounded-md overflow-hidden flex flex-col shadow hover:bg-gray-100 cursor-pointer transition-all hover:shadow-md"
             >
-              <div
-                className="w-1 h-full rounded-full"
-                style={{ backgroundColor: contact.color }}
-              />
-
-              <div className="flex-1 flex justify-between px-4 py-3">
-                <div className="flex items-center">
-                  <span className="font-medium">{contact.name} </span>
-                  {contact.type && (
-                    <span className="ml-2 text-xs border px-1 py-0.5 rounded-md">
-                      {contact.type}
-                    </span>
-                  )}
+              <div className="border-b flex items-center px-3 py-2">
+                <div
+                  className="rounded-full aspect-square w-7 text-sm flex items-center justify-center text-white font-medium mr-2"
+                  style={{ backgroundColor: contact.color }}
+                >
+                  {contact.name[0]}
                 </div>
 
-                <div className="flex flex-col items-end pt-0.5">
-                  <div className="flex"></div>
+                <div className="font-medium">{contact.name} </div>
+              </div>
+
+              <div className="px-3 py-3">
+                <div className="flex">
+                  <div className="w-7 flex items-center justify-center mr-1">
+                    <TagIcon className="w-5 h-5 text-gray-500" />
+                  </div>
+
+                  {contact.type && (
+                    <div className="text-xs border px-1 text-gray-700 font-semibold py-0.5 rounded-md">
+                      {contact.type}
+                    </div>
+                  )}
                 </div>
               </div>
             </Link>
