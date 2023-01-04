@@ -15,7 +15,7 @@ export default function Home() {
             <Link
               key={contact.id}
               href={`/contacts/${contact.id}`}
-              className="bg-white rounded-md overflow-hidden flex flex-col shadow hover:bg-gray-100 cursor-pointer transition-all hover:shadow-md"
+              className="bg-white rounded-md overflow-hidden flex flex-col shadow hover:bg-gray-100g cursor-pointer transition-all hover:shadow-md"
             >
               <div className="border-b flex items-center px-3 py-2">
                 <div

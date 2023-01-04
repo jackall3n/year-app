@@ -144,7 +144,7 @@ export default function Home() {
         />
       )}
 
-      <div className="fixed flex flex-col bottom-0 right-0 left-0">
+      <div className="z-40 fixed flex flex-col bottom-0 right-0 left-0">
         <div className="flex items-center justify-end p-4 sm:p-8">
           <AddButton
             onClick={onToggleSelecting}
