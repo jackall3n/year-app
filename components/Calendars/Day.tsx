@@ -3,16 +3,15 @@ import classnames from "classnames";
 import { format, getDay } from "date-fns";
 import { IEvent } from "../../types/event";
 import { orderBy } from "lodash";
+import { getDayFromDate } from "./utils";
 
-interface IDay {
-  date: Date;
-  events: IEvent[];
-}
+type IDay = ReturnType<typeof getDayFromDate>;
 
 interface Props {
   day: IDay;
   className?: string;
   selected: string[];
+  showMonth?: boolean;
 
   onClick(date: string, event: MouseEvent): void;
 }
@@ -32,12 +31,8 @@ function createGradient(events: IEvent[]) {
   return `linear-gradient(135deg, ${gradients.join(", ")})`;
 }
 
-export function Day({ day, className, selected, onClick }: Props) {
-  const { date, events } = day;
-
-  const isWeekend = [0, 6].includes(getDay(date));
-
-  const formatted = format(date, "yyyy-MM-dd");
+export function Day({ day, className, selected, onClick, showMonth }: Props) {
+  const { date, events, formatted, isWeekend, dayOfMonth } = day;
 
   const [start, end] = orderBy(selected);
 
@@ -48,16 +43,15 @@ export function Day({ day, className, selected, onClick }: Props) {
 
   const classNames = classnames(
     className,
-    "aspect-square select-none cursor-pointer hover:bg-gray-200 text-xs flex p-2 rounded-sm relative overflow-hidden",
+    "aspect-square select-none cursor-pointer hover:bg-gray-200 text-xs flex rounded-sm relative overflow-hidden",
     {
       "bg-gray-50": isWeekend,
       "bg-white": !isWeekend,
-      "text-white": events.length,
+      "font-bold": events.length,
     }
   );
 
-  const description = format(date, "d");
-  const isFirst = description === "1";
+  const isFirst = dayOfMonth === 1;
 
   return (
     <div
@@ -69,8 +63,8 @@ export function Day({ day, className, selected, onClick }: Props) {
       }}
     >
       <div className={classnames("relative", { "font-semibold": isFirst })}>
-        <span>{description}</span>
-        {isFirst && <span> {format(date, "MMM")}</span>}
+        <span>{dayOfMonth}</span>
+        {isFirst && showMonth && <span> {format(date, "MMM")}</span>}
       </div>
 
       {isSelected && (
@@ -78,16 +72,6 @@ export function Day({ day, className, selected, onClick }: Props) {
           className={classnames("absolute inset-0 bg-gray-800 bg-opacity-40")}
         />
       )}
-
-      <div className="hidden absolute inset-0 flex flex-col divide-y divide-black divide-opacity-50">
-        {events.map((e) => (
-          <div
-            className="flex-1"
-            key={e.id}
-            style={{ backgroundColor: e.color }}
-          />
-        ))}
-      </div>
     </div>
   );
 }

@@ -14,10 +14,15 @@ import {
   startOfYear,
 } from "date-fns";
 import { Day } from "./Day";
+import { make } from "../../utils/make";
+import { getDayFromDate } from "./utils";
+import { range } from "../../utils/range";
 
 interface Props {
   events: IEvent[];
+
   onClick(date: string, event: MouseEvent): void;
+
   selected: string[];
 }
 
@@ -31,7 +36,7 @@ export function DesktopCalendar({ events, onClick, selected }: Props) {
       <div className="flex gap-1 grid-flow-col items-center sticky top-0 pt-5">
         <div className="w-20 h-7 flex items-center justify-center" />
 
-        {Array.from(Array(37)).map((_, i) => {
+        {make(37).map((i) => {
           const day = addDays(startOfYear(new Date(year, 0, 1)), i + 1);
 
           return (
@@ -56,10 +61,10 @@ export function DesktopCalendar({ events, onClick, selected }: Props) {
             className="w-20 h-7 flex items-center justify-center"
             data-offset={month.offset}
           >
-            {format(month.days[0].date, "MMM")}
+            {month.month}
           </div>
 
-          {Array.from(Array(month.padding.start)).map((_, i) => (
+          {make(month.padding.start).map((_, i) => (
             <div key={i} className="w-7 h-7 bg-transparent" />
           ))}
 
@@ -69,7 +74,7 @@ export function DesktopCalendar({ events, onClick, selected }: Props) {
               day={day}
               selected={selected}
               onClick={onClick}
-              className="w-7 h-7"
+              className="w-7 h-7 items-center justify-center"
             />
           ))}
         </div>
@@ -91,7 +96,6 @@ function getMonths(year: number, events: IEvent[]) {
 function getMonth(date: Date, events: IEvent[]) {
   const start = startOfMonth(date);
   const end = addMonths(date, 1);
-  const days = differenceInDays(end, start);
 
   const padding = {
     start: getDay(start) || 6,
@@ -101,32 +105,8 @@ function getMonth(date: Date, events: IEvent[]) {
   return {
     padding,
     offset: getDay(start) || 7,
-    days: Array.from(Array(days)).map((_, i) => {
-      const date = addDays(start, i);
-      const e = events.filter((event) => {
-        const { start, end } = event;
-
-        if (!start) {
-          return false;
-        }
-
-        const endDate = end || start;
-
-        if (endDate < start) {
-          return false;
-        }
-
-        return isWithinInterval(date, {
-          start: startOfDay(start),
-          end: endOfDay(endDate),
-        });
-      });
-
-      return {
-        date,
-        events: e,
-      };
-    }),
+    month: format(start, "MMM"),
+    days: range(start, end).map((date) => getDayFromDate(date, events)),
   };
 }
 
