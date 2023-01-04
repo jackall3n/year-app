@@ -23,8 +23,13 @@ export default function Home() {
               />
 
               <div className="flex-1 flex justify-between px-4 py-3">
-                <div className="flex flex-col">
-                  <div className="font-medium">{contact?.name}</div>
+                <div className="flex items-center">
+                  <span className="font-medium">{contact.name} </span>
+                  {contact.type && (
+                    <span className="ml-2 text-xs border px-1 py-0.5 rounded-md">
+                      {contact.type}
+                    </span>
+                  )}
                 </div>
 
                 <div className="flex flex-col items-end pt-0.5">

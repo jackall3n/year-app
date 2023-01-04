@@ -66,7 +66,11 @@ export default function Home() {
 
       const contact =
         contactId === "NEW"
-          ? await addContact({ name: values.contactName, color: values.color })
+          ? await addContact({
+              name: values.contactName,
+              color: values.color,
+              type: values.contactType,
+            })
           : (doc(user, "contacts", contactId) as DocumentReference<IContact>);
 
       const job =

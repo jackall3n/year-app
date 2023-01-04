@@ -6,7 +6,6 @@ import { Field } from "./Form";
 
 import colors from "../colors.json";
 import { orderBy } from "lodash";
-import useCollection from "../hooks/useCollection";
 import { useJobs } from "../providers/JobsProvider";
 
 interface Props {
@@ -24,6 +23,7 @@ export interface ICreateEvent {
   end: string;
   contact: string;
   contactName: string;
+  contactType: string;
   job: string;
   jobName: string;
   color: string;
@@ -48,6 +48,7 @@ function AddModal({ onClose, onSave, start, end, contacts }: Props) {
             contact: "",
             notes: "",
             contactName: "",
+            contactType: "TRADE",
             job: "",
             jobName: "",
           }}
@@ -124,6 +125,10 @@ function AddEventContact({ values }: { values: ICreateEvent }) {
       {values.contact === "NEW" && (
         <>
           <Field label="Contact name" name="contactName" type="text" />
+          <Field label="Contact type" name="contactType" as="select">
+            <option value="TRADE">Trade</option>
+            <option value="Private">Private</option>
+          </Field>
           <Field label="Contact color" name="color" as="select">
             <option value="" hidden />
 
